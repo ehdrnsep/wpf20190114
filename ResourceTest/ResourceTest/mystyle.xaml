@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ResourceTest">
+    <Style TargetType="{x:Type Grid}">
+        <Style.Resources>
+            <!--  <! —아래 스타일은 그리드가 샐행되는 시점에 동적 바인딩 된다.   -->
+            <Style x:Key="ConflictButton" TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="border"
+                                    Padding="4,2" Background="Red" BorderBrush="DarkGray" BorderThickness="4" CornerRadius="10" />
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
+    </Style>
+    <!--  ConflictButton의 루트레벨 스타일, 없으면 오류  -->
+    <!--
+        <! — 최초 화면이 로딩될 때 StaticResource든 DynamicResource든
+        ConflictButton 스타일을 요구하면 아래의 스타일이 적용되고. DynamicResource로
+        정의한 졍우 그리드가 랜더링 되면서 Grid안에 정의된 ConflictButton 스타일이
+        동적으로 적용된다. 
+    -->
+    <Style x:Key="ConflictButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Blue" />
+
+    </Style>
+</ResourceDictionary>

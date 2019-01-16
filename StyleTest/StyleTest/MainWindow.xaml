@@ -1,0 +1,65 @@
+﻿<Window
+    x:Class="StyleTest.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:StyleTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:ValueToFooConverter x:Key="converter" />
+        <local:Emps x:Key="Emps" />
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Deptno, Converter={StaticResource converter}}" Value="True">
+                    <Setter Property="Background" Value="Yellow" />
+                </DataTrigger>
+                <!--<DataTrigger Binding="{Binding Path=Deptno}" Value="20">
+                    <Setter Property="Background" Value="Green" />
+                </DataTrigger>-->
+                <!--<MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Path=Empno}" Value="1001" />
+                        <Condition Binding="{Binding Path=Ename}" Value="SMITH" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Background" Value="RED" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>-->
+            </Style.Triggers>
+        </Style>
+        <DataTemplate DataType="{x:Type local:Emp}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Width="50"
+                    FontSize="12"
+                    Text="{Binding Path=Empno}" />
+                <TextBlock
+                    Width="50"
+                    FontSize="12"
+                    Text="{Binding Path=Ename}" />
+                <TextBlock
+                    Width="50"
+                    FontSize="12"
+                    Text="{Binding Path=Deptno}" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <StackPanel>
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="18"
+            FontWeight="Bold">
+            데이터 트리거 샘플
+        </TextBlock>
+        <ListBox
+            Width="300"
+            HorizontalAlignment="Center"
+            Background="White"
+            ItemsSource="{Binding Source={StaticResource Emps}}" />
+    </StackPanel>
+
+</Window>
